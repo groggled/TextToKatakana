@@ -1,2 +1,2 @@
 # TextToKatakana
- Simple command line tool that converts words from the Latin alphabet into Japanese katakana
+ Simple command line tool that converts text from the Latin alphabet into Japanese katakana
