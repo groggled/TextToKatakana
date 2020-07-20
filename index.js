@@ -14,13 +14,16 @@ function toKatakana (text) {
             continue
         } //when there is no such char in the map, it just adds the char to the result
         syllable = text.slice(i, i + l)
-        if (syllable == "") {
+        if (syllable === "") {
             return result
         }
         console.log("The syllable has been set to: " + syllable)
         if(KatakanaTable.has(syllable)) {
             result += KatakanaTable.get(syllable)
             i += syllable.length
+            l = 3
+        } else if (syllable.length === 2 && syllable.slice(0,0) === syllable.slice(1, 1) ) {
+            result += "ッ"
             l = 3
         } else if(syllable.length === 1) {
             result += syllable
