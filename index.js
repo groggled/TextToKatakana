@@ -1,4 +1,4 @@
-let {katakana} = require("./katakanatable.json")
+let {katakana, numbers} = require("./katakanatable.json")
 let KatakanaTable = new Map(Object.entries(katakana))
 
 const readline = require('readline').createInterface({
@@ -10,6 +10,8 @@ readline.question('What do you want to convert? \n', (text) => {
     console.log('Katakana: ' + toKatakana(text))
     readline.close()
 })
+
+let convertNumbers = true
 
 function toKatakana (text) {
     text = text.toLowerCase()
@@ -29,8 +31,12 @@ function toKatakana (text) {
             result += KatakanaTable.get(syllable)
             i += syllable.length
             l = 3
-        } else if (syllable.length === 2 && syllable.slice(0,1) === syllable.slice(1, 2) ) {
+        } else if (syllable.length === 2 && syllable.slice(0,1) === syllable.slice(1, 2) && syllable.isNaN) {
             result += "ッ"
+            i ++
+            l = 3
+        } else if (convertNumbers && syllable.length === 1 && !syllable.isNaN) {
+            result += numbers[syllable]
             i ++
             l = 3
         } else if(syllable.length === 1) {
