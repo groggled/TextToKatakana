@@ -1,18 +1,25 @@
 let {katakana} = require("./katakanatable.json")
 let KatakanaTable = new Map(Object.entries(katakana))
 
-let text = "shiji"
-console.log(toKatakana(text))
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+
+readline.question('What do you want to convert? \n', (text) => {
+    console.log('Katakana: ' + toKatakana(text))
+    readline.close()
+})
 
 function toKatakana (text) {
+    text = text.toLowerCase()
     let syllable = ""
-    let result = ""
     for (let i = 0, l = 3, result = "";;) {
         if(l === 0) {
             result += text.slice(i, i)
             i ++
             continue
-        } //when there is no such char in the map, it just adds the char to the result
+        }
         syllable = text.slice(i, i + l)
         if (syllable === "") {
             return result
@@ -22,8 +29,9 @@ function toKatakana (text) {
             result += KatakanaTable.get(syllable)
             i += syllable.length
             l = 3
-        } else if (syllable.length === 2 && syllable.slice(0,0) === syllable.slice(1, 1) ) {
+        } else if (syllable.length === 2 && syllable.slice(0,1) === syllable.slice(1, 2) ) {
             result += "ッ"
+            i ++
             l = 3
         } else if(syllable.length === 1) {
             result += syllable
